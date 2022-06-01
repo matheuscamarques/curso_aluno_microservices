@@ -1,0 +1,28 @@
+version: "3.2"
+services:
+  # Mensagerias
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - rabbitmq_go_net
+  # Databases POSTGRES ONLY
+  # aluno_db:
+  # curso_db:
+  # curso_aluno_db:
+  # NestJS Aplications
+  # api_gateway:
+  # aluno: 
+  # curso:
+  # curso_aluno:
+
+
+networks:
+  rabbitmq_go_net:
+    driver: bridge
