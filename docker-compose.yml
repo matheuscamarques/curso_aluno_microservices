@@ -2,29 +2,110 @@ version: "3.2"
 services:
   # Mensagerias
   rabbitmq:
-    image: rabbitmq:3-management-alpine
+    build:
+      context: ./.docker/rabbitmq
+      dockerfile: Dockerfile
     container_name: 'rabbitmq'
     ports:
-        - 5672:5672
-        - 15672:15672
+      - '5672:5672'
+      - '15672:15672'
     volumes:
-        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+        - ./.docker-conf/rabbitmq/:/var/lib/rabbitmq
     networks:
         - rabbitmq_go_net
-  # Databases POSTGRES ONLY
-  # aluno_db:
-  # curso_db:
-  # curso_aluno_db:
-  # NestJS Aplications
-  # api_gateway:
-  # aluno: 
-  # curso:
-  # curso_aluno:
-  # AngularTS Aplications
-  # backoffice:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+      - ./.docker/postgres/dump.sql:/docker-entrypoint-initdb.d/init.sql
 
+    networks:
+      - rabbitmq_go_net
 
+  gui:
+    build:
+      context: ./frontend/apps/backoffice
+      dockerfile: Dockerfile
+    volumes:
+      - './frontend/apps/backoffice:/home/node/app'
+    ports:
+      - '4200:4200'
+    networks:
+      - rabbitmq_go_net
+    environment:
+      - GATEWAY_API=gateway
+
+  gateway:
+    build:
+      context: ./backend/apps/api_gateway
+      dockerfile: Dockerfile
+    volumes:
+      - './backend/apps/api_gateway:/home/node/app'
+    ports:
+      - '3001:3001'
+    networks:
+      - rabbitmq_go_net
+    environment:
+      - MENSAGERIA=rabbitmq
+    links:
+      - rabbitmq
+  aluno_service:
+    build:
+      context: ./backend/apps/aluno_service
+      dockerfile: Dockerfile
+    volumes:
+      - './backend/apps/aluno_service:/home/node/app'
+    networks:
+      - rabbitmq_go_net
+    environment:
+      - MENSAGERIA=rabbitmq
+      - DB=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    links:
+      - rabbitmq
+      - db
+  curso_service:
+    build:
+      context: ./backend/apps/curso_service
+      dockerfile: Dockerfile
+    volumes:
+      - './backend/apps/curso_service:/home/node/app'
+    networks:
+      - rabbitmq_go_net
+    environment:
+      - MENSAGERIA=rabbitmq
+      - DB=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    links:
+      - rabbitmq
+      - db
+  curso_aluno_service:
+    build:
+      context: ./backend/apps/curso_aluno_service
+      dockerfile: Dockerfile
+    volumes:
+      - './backend/apps/curso_aluno_service:/home/node/app'
+    networks:
+      - rabbitmq_go_net
+    environment:
+      - MENSAGERIA=rabbitmq
+      - DB=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    links:
+      - rabbitmq
+      - db
 networks:
   rabbitmq_go_net:
     driver: bridge
+volumes:
+  db:
+    driver: local

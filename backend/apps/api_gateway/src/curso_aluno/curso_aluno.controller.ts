@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { uuid } from 'src/aluno/entities/aluno.entity';
 import { CursoAlunoService } from './curso_aluno.service';
 import { CreateCursoAlunoDto } from './dto/create-curso_aluno.dto';
 import { UpdateCursoAlunoDto } from './dto/update-curso_aluno.dto';
@@ -12,23 +13,18 @@ export class CursoAlunoController {
     return this.cursoAlunoService.create(createCursoAlunoDto);
   }
 
-  @Get()
-  findAll() {
-    return this.cursoAlunoService.findAll();
+  @Get('/list-by-aluno/:id')
+  findAllCursoAlunoByAluno(@Param('id') codigo: uuid) {
+    return this.cursoAlunoService.findAllByAluno(codigo);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cursoAlunoService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCursoAlunoDto: UpdateCursoAlunoDto) {
-    return this.cursoAlunoService.update(+id, updateCursoAlunoDto);
+  @Get('/list-by-curso/:id')
+  findAllCursoAlunoByCurso(@Param('id') codigo: uuid) {
+    return this.cursoAlunoService.findAllByCurso(codigo);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cursoAlunoService.remove(+id);
+  remove(@Param('id') codigo: uuid) {
+    return this.cursoAlunoService.remove(codigo);
   }
 }

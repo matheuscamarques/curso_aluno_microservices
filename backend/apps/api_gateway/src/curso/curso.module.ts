@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CursoService } from './curso.service';
 import { CursoController } from './curso.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-
+const rabbitUrl = process.env.MENSAGERIA || '';
 @Module({
   imports: [
     ClientsModule.register([
@@ -10,7 +10,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         name: 'CURSO_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqps://vadoaqto:ycsvbofsHk6jRlvFyj38evXeQpqWs8Zg@jackal.rmq.cloudamqp.com/vadoaqto'],
+          urls: [`amqp://${rabbitUrl}`],
           queue: 'curso_queue',
           queueOptions: {
             durable: false

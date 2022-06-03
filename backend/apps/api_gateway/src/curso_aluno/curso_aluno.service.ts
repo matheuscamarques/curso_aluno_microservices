@@ -1,26 +1,27 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { uuid } from 'src/aluno/entities/aluno.entity';
 import { CreateCursoAlunoDto } from './dto/create-curso_aluno.dto';
 import { UpdateCursoAlunoDto } from './dto/update-curso_aluno.dto';
 
 @Injectable()
 export class CursoAlunoService {
+  constructor(
+    @Inject('CURSO_ALUNO_SERVICE') private readonly client : ClientProxy,
+  ) {}
+
   create(createCursoAlunoDto: CreateCursoAlunoDto) {
-    return 'This action adds a new cursoAluno';
+    return this.client.send<string>('createCursoAluno', createCursoAlunoDto);
   }
 
-  findAll() {
-    return `This action returns all cursoAluno`;
+  remove(codigo: uuid) {
+    return  this.client.send<string>('removeCursoAluno', codigo);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cursoAluno`;
+  findAllByCurso(codigo: uuid) {
+    return this.client.send<string[]>('findAllByCurso', codigo);
   }
-
-  update(id: number, updateCursoAlunoDto: UpdateCursoAlunoDto) {
-    return `This action updates a #${id} cursoAluno`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} cursoAluno`;
+  findAllByAluno(codigo: uuid) {
+    return this.client.send<string[]>('findAllByAluno', codigo);
   }
 }

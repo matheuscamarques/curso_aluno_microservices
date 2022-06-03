@@ -9,10 +9,10 @@ import { Aluno } from './aluno/entities/aluno.entity';
   imports: [AlunoModule,
    TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: process.env.DB,
       port: 5432,
-      username: 'postgres',
-      password: '159753',
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
       database: 'aluno',
       entities: [Aluno],
       synchronize: true,

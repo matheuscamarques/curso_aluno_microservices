@@ -12,31 +12,23 @@ export class CursoAlunoService {
     
   }
 
-
-  findAllByAluno(codigo: uuid) {
-    return this.repo.find({
+  async findAllByAluno(codigo: uuid) {
+    return (await this.repo.find({
       where: {
-        codigo_aluno: codigo
-      }
-    });
+        codigo_aluno: codigo,
+      },
+    })).map(cursoAluno => `${cursoAluno.codigo}:${cursoAluno.codigo_curso}`)
   }
-  findAllByCurso(codigo: uuid) {
-    return this.repo.find({
+  async findAllByCurso(codigo: uuid) {
+    return (await this.repo.find({
       where: {
         codigo_curso: codigo  
       }
-    })
+    })).map(cursoAluno => `${cursoAluno.codigo}:${cursoAluno.codigo_aluno}`)
   }
+
   create(createCursoAlunoDto: CreateCursoAlunoDto) {
-    return this.repo.create(createCursoAlunoDto)
-  }
-
-  findOne(codigo: uuid) {
-    return this.repo.find(codigo)
-  }
-
-  update(codigo: uuid, updateCursoAlunoDto: UpdateCursoAlunoDto) {
-    return this.repo.update(codigo,updateCursoAlunoDto)
+    return this.repo.save(createCursoAlunoDto)
   }
 
   remove(codigo: uuid) {

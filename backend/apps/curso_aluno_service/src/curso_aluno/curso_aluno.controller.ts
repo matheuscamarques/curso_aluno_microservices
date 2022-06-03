@@ -24,16 +24,6 @@ export class CursoAlunoController {
     return this.cursoAlunoService.findAllByCurso(codigo);
   }
 
-  @MessagePattern('findOneCursoAluno')
-  findOne(@Payload() codigo: uuid) {
-    return this.cursoAlunoService.findOne(codigo);
-  }
-
-  @MessagePattern('updateCursoAluno')
-  update(@Payload() updateCursoAlunoDto: UpdateCursoAlunoDto) {
-    return this.cursoAlunoService.update(updateCursoAlunoDto.codigo, updateCursoAlunoDto);
-  }
-
   @MessagePattern('removeCursoAluno')
   remove(@Payload() codigo: uuid) {
     return this.cursoAlunoService.remove(codigo);

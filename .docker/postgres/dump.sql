@@ -1,0 +1,3 @@
+CREATE DATABASE aluno;
+CREATE DATABASE curso;
+CREATE DATABASE curso_aluno;

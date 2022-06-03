@@ -9,10 +9,10 @@ import { Curso } from './curso/entities/curso.entity';
   imports: [CursoModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: process.env.DB,
       port: 5432,
-      username: 'postgres',
-      password: '159753',
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
       database: 'curso',
       entities: [Curso],
       synchronize: true,
