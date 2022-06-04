@@ -17,14 +17,14 @@ export class CursoAlunoService {
       where: {
         codigo_aluno: codigo,
       },
-    })).map(cursoAluno => `${cursoAluno.codigo}:${cursoAluno.codigo_curso}`)
+    })).map(cursoAluno => `${cursoAluno.codigo_curso}`)
   }
   async findAllByCurso(codigo: uuid) {
     return (await this.repo.find({
       where: {
         codigo_curso: codigo  
       }
-    })).map(cursoAluno => `${cursoAluno.codigo}:${cursoAluno.codigo_aluno}`)
+    })).map(cursoAluno => `${cursoAluno.codigo_aluno}`)
   }
 
   create(createCursoAlunoDto: CreateCursoAlunoDto) {

@@ -1,0 +1,9 @@
+
+<div *ngFor="let item of menuList" [routerLink]="item.routerLink" [routerLinkActive]="'active'">
+    <button mat-button
+        class="c-button"
+        (click)="moveTo(item.routerLink || '#')"
+    >
+    {{item.title}}
+    </button>
+</div>
