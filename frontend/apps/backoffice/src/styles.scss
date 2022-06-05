@@ -5,7 +5,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 @import '@angular/material/prebuilt-themes/purple-green.css';
+.m-5{
+    margin: 5em;
+}
 
+.mb-1{
+    margin-bottom: 1em;
+}
+
+.m-1{
+    margin: 1em;
+}
 
 .sidenav-container {
     width: 100%;

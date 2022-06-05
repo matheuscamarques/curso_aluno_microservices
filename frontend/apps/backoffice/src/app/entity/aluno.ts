@@ -7,6 +7,7 @@ import { Curso } from "./curso";
 export type uuid = string;
 
 export class Aluno {
+    public codigo: uuid = '';
     public nome: string = '';
     public cursos: Curso[] = [];
 }

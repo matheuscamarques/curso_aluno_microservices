@@ -18,6 +18,11 @@ import { MatInputModule } from "@angular/material/input";
 import { HttpClientModule } from '@angular/common/http';
 import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { AlunoPageComponent } from './view/internal-page/aluno-page/aluno-page.component';
+import { CursoPageComponent } from './view/internal-page/curso-page/curso-page.component';
+
+
 
 @NgModule({
   declarations: [
@@ -25,7 +30,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MenuComponent,
     AlunoComponent,
     CursoComponent,
-    FormAlunoComponent
+    FormAlunoComponent,
+    AlunoPageComponent,
+    CursoPageComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +47,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatInputModule,
     HttpClientModule,
     MatTableModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

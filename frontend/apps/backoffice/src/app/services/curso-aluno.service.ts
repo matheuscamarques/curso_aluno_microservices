@@ -8,11 +8,10 @@ import { CursoService } from './curso.service';
 })
 export class CursoAlunoService {
   constructor(
-    private http: HttpClient,
-    private cursoService: CursoService,
+    private http: HttpClient
   ) { }
   
   getByAluno(codigo: string){
-       return this.http.get<string[]>(`http://localhost:3001/curso-aluno/aluno/list-by-aluno/${codigo}`)
+       return this.http.get<string[]>(`http://localhost:3001/curso-aluno/list-by-aluno/${codigo}`)
   }
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { AlunoCreate } from 'src/app/dtos/aluno/aluno-create';
 import { AlunoUpdate } from 'src/app/dtos/aluno/aluno-update';
-import { Aluno } from 'src/app/entity/aluno';
+import { Aluno, uuid } from 'src/app/entity/aluno';
 import { AlunoService } from 'src/app/services/aluno.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class AlunoComponent implements OnInit {
   
   constructor(
     private service: AlunoService,
-    private _snackBar: MatSnackBar
+    private router: Router,
+    private _snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -63,6 +65,10 @@ export class AlunoComponent implements OnInit {
         this.alunos = response;
         console.log(this.alunos);
       })
+  }
+
+  goToAlunoPage(codigo : uuid){
+    this.router.navigate([AlunoComponent.path, codigo]);
   }
 
 
