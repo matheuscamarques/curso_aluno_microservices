@@ -25,7 +25,7 @@ export class CursoAlunoController {
   }
 
   @MessagePattern('removeCursoAluno')
-  remove(@Payload() codigo: uuid) {
-    return this.cursoAlunoService.remove(codigo);
+  remove(@Payload() createCursoAlunoDto: CreateCursoAlunoDto) {
+    return this.cursoAlunoService.remove(createCursoAlunoDto);
   }
 }

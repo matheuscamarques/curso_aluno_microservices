@@ -23,8 +23,8 @@ export class CursoAlunoController {
     return this.cursoAlunoService.findAllByCurso(codigo);
   }
 
-  @Delete(':id')
-  remove(@Param('id') codigo: uuid) {
-    return this.cursoAlunoService.remove(codigo);
+  @Delete()
+  remove(@Body() createCursoAlunoDto: CreateCursoAlunoDto) {
+    return this.cursoAlunoService.remove(createCursoAlunoDto);
   }
 }

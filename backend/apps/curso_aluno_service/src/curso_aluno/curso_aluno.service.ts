@@ -31,7 +31,14 @@ export class CursoAlunoService {
     return this.repo.save(createCursoAlunoDto)
   }
 
-  remove(codigo: uuid) {
-    return this.repo.delete(codigo)
+ async  remove(dto: CreateCursoAlunoDto) {
+    const aggregate =  (await this.repo.find({
+      where: {
+        codigo_aluno: dto.codigo_aluno,
+        codigo_curso: dto.codigo_curso
+      }
+    }))
+
+    return this.repo.remove(aggregate)
   }
 }

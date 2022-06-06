@@ -14,8 +14,8 @@ export class CursoAlunoService {
     return this.client.send<string>('createCursoAluno', createCursoAlunoDto);
   }
 
-  remove(codigo: uuid) {
-    return  this.client.send<string>('removeCursoAluno', codigo);
+  remove(createCursoAlunoDto: CreateCursoAlunoDto) {
+    return  this.client.send<string>('removeCursoAluno', createCursoAlunoDto);
   }
 
   findAllByCurso(codigo: uuid) {

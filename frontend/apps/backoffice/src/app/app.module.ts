@@ -21,7 +21,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { AlunoPageComponent } from './view/internal-page/aluno-page/aluno-page.component';
 import { CursoPageComponent } from './view/internal-page/curso-page/curso-page.component';
+import { ModalsComponent } from './share/modals/modals.component';
+import { SelectOrCreateAlunoComponent } from './share/modals/aluno/select-or-create-aluno/select-or-create-aluno.component';
 
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
@@ -32,7 +35,9 @@ import { CursoPageComponent } from './view/internal-page/curso-page/curso-page.c
     CursoComponent,
     FormAlunoComponent,
     AlunoPageComponent,
-    CursoPageComponent
+    CursoPageComponent,
+    ModalsComponent,
+    SelectOrCreateAlunoComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +53,8 @@ import { CursoPageComponent } from './view/internal-page/curso-page/curso-page.c
     HttpClientModule,
     MatTableModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

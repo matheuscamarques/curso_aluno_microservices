@@ -5,6 +5,19 @@
         <h1>
             {{aluno.nome}}
         </h1>
+        <!-- Remover Aluno -->
+        <div class="
+                d-flex 
+                align-items-center
+                justify-content-end
+                m-1
+            ">
+            <button mat-flat-button
+                (click)="deleteAluno(aluno.codigo)"
+            >
+                Exluir Aluno
+            </button>
+        </div>
     </div>
 
 
@@ -26,7 +39,7 @@
         </div>
 
 
-        <table mat-table [dataSource]="dataSource" class="w-100" multiTemplateDataRows>
+        <table mat-table [dataSource]="cursos" class="w-100" multiTemplateDataRows>
 
             <ng-container matColumnDef="codigo">
                 <th mat-header-cell *matHeaderCellDef> Código. </th>
@@ -46,6 +59,12 @@
                     <button mat-icon-button matTooltip="Ver mais detalhes do curso" matTooltipPosition="after"
                         (click)="goToCursoPage(element.codigo)">
                         <mat-icon>remove_red_eye</mat-icon>
+                    </button>
+
+                    <!-- Remove element -->
+                    <button mat-icon-button matTooltip="Remover curso" matTooltipPosition="after"
+                        (click)="deleteCurso(element.codigo)">
+                        <mat-icon>delete</mat-icon>
                     </button>
                 </td>
             </ng-container>

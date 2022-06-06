@@ -15,6 +15,9 @@ export class CursoService {
     return this.http.get<Curso>(`http://localhost:3001/curso/${codigo}`)
   }
 
+  getAll() {
+    return this.http.get<Curso[]>('http://localhost:3001/curso/')
+  }
 
 
 }

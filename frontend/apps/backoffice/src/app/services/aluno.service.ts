@@ -26,4 +26,8 @@ export class AlunoService {
     return this.http.get<Aluno[]>('http://localhost:3001/aluno/')
   }
 
+  delete(id: string) {
+    return this.http.delete(`http://localhost:3001/aluno/${id}`)
+  }
+
 }
