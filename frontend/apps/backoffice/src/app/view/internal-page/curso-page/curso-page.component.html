@@ -5,6 +5,19 @@
         <h1>
             {{curso.descricao}}
         </h1>
+
+        <div class="
+        d-flex 
+        align-items-center
+        justify-content-end
+        m-1
+    ">
+    <button mat-flat-button
+        (click)="deleteCurso(curso.codigo)"
+    >
+        Exluir Curso
+    </button>
+</div>
     </div>
 
 
@@ -48,8 +61,17 @@
                     <button mat-icon-button
                             matTooltip="Ver mais detalhes"
                             matTooltipPosition="after"
+                            (click)="goToAlunoPage(element.codigo)"
                            >
                         <mat-icon>remove_red_eye</mat-icon>
+                    </button>
+                    <!-- remover -->
+                    <button mat-icon-button
+                            matTooltip="Remover aluno do curso"
+                            matTooltipPosition="after"
+                            (click)="removeAluno(element.codigo)"
+                            >
+                        <mat-icon>delete</mat-icon>
                     </button>
                 </td>
             </ng-container>

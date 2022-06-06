@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Aluno, uuid } from 'src/app/entity/aluno';
@@ -6,6 +7,8 @@ import { Curso } from 'src/app/entity/curso';
 import { AlunoService } from 'src/app/services/aluno.service';
 import { CursoAlunoService } from 'src/app/services/curso-aluno.service';
 import { CursoService } from 'src/app/services/curso.service';
+import { IDictionary } from 'src/app/share/modals/aluno/select-or-create-aluno/select-or-create-aluno.component';
+import { SelectOrCreateCursoModalComponent } from 'src/app/share/modals/curso/select-or-create-curso-modal/select-or-create-curso-modal.component';
 import { AlunoComponent } from '../../aluno/aluno.component';
 import { CursoComponent } from '../../curso/curso.component';
 
@@ -26,12 +29,15 @@ export class AlunoPageComponent implements OnInit {
     private alunoService: AlunoService,
     private cursoAlunoService: CursoAlunoService,
     private cursoService: CursoService,
+    private dialogRef: MatDialog
   ) { }
 
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
+      this.aluno = new Aluno();
+      this.cursos = new MatTableDataSource();
 
       const assignAluno = (aluno: Aluno) => {
         Object.assign(this.aluno, aluno)
@@ -39,9 +45,9 @@ export class AlunoPageComponent implements OnInit {
 
       const pushCurso = (curso: Curso) => {
         const cursoInstance = new Curso();
-                Object.assign(cursoInstance, curso);
-                this.aluno.cursos.push(cursoInstance);
-                this.cursos.data = this.aluno.cursos;
+        Object.assign(cursoInstance, curso);
+        this.aluno.cursos.push(cursoInstance);
+        this.cursos.data = this.aluno.cursos;
       }
 
       const appendCursos = (cursos: string[]) => {
@@ -52,8 +58,8 @@ export class AlunoPageComponent implements OnInit {
       }
 
       this.alunoService
-      .get(id)
-      .subscribe(assignAluno);
+        .get(id)
+        .subscribe(assignAluno);
 
       this.cursoAlunoService
         .getByAluno(id)
@@ -71,13 +77,36 @@ export class AlunoPageComponent implements OnInit {
   }
 
   deleteCurso(codigo: uuid) {
-    this.cursoAlunoService.delete(this.aluno.codigo,codigo).subscribe(() => {
+    this.cursoAlunoService.delete(this.aluno.codigo, codigo).subscribe(() => {
       this.ngOnInit();
     });
   }
 
-  goToCursoPage(codigo: uuid){
+  goToCursoPage(codigo: uuid) {
     this.router.navigate([CursoComponent.path, codigo]);
   }
 
+  openCursoModal() {
+    const dialogRef = this.dialogRef.open(SelectOrCreateCursoModalComponent, {
+      width: '90%',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const cursos = Object.values(result as IDictionary<string>);
+        for (const codigo of cursos) {
+          this.cursoAlunoService.create({
+            codigo_aluno: this.aluno.codigo,
+            codigo_curso: codigo
+          }).subscribe(() => {
+            console.log('Aluno adicionado ao curso');
+          });
+        }
+        setTimeout(() => {
+          this.ngOnInit();
+        }, cursos.length * 500);
+      }
+
+    });
+  }
 }

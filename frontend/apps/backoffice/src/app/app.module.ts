@@ -23,8 +23,11 @@ import { AlunoPageComponent } from './view/internal-page/aluno-page/aluno-page.c
 import { CursoPageComponent } from './view/internal-page/curso-page/curso-page.component';
 import { ModalsComponent } from './share/modals/modals.component';
 import { SelectOrCreateAlunoComponent } from './share/modals/aluno/select-or-create-aluno/select-or-create-aluno.component';
-
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
+import { CreateCursoModalComponent } from './share/modals/curso/create-curso-modal/create-curso-modal.component';
+import { SelectOrCreateCursoModalComponent } from './share/modals/curso/select-or-create-curso-modal/select-or-create-curso-modal.component';
 
 
 @NgModule({
@@ -37,7 +40,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     AlunoPageComponent,
     CursoPageComponent,
     ModalsComponent,
-    SelectOrCreateAlunoComponent
+    SelectOrCreateAlunoComponent,
+    CreateCursoModalComponent,
+    SelectOrCreateCursoModalComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +59,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatTableModule,
     MatSnackBarModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    MatRadioModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

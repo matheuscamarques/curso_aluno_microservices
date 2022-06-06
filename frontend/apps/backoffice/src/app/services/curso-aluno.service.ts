@@ -8,8 +8,6 @@ import { CursoService } from './curso.service';
   providedIn: 'root'
 })
 export class CursoAlunoService {
-
-
   constructor(
     private http: HttpClient
   ) { }
@@ -29,5 +27,9 @@ export class CursoAlunoService {
         codigo_aluno: alunoCodigo
       }
     })
+  }
+
+  create(arg: { codigo_aluno: uuid; codigo_curso: uuid; }) {
+    return this.http.post(`http://localhost:3001/curso-aluno/`, arg)
   }
 }
